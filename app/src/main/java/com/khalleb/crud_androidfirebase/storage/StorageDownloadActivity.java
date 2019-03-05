@@ -1,7 +1,10 @@
 package com.khalleb.crud_androidfirebase.storage;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +27,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.khalleb.crud_androidfirebase.R;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 public class StorageDownloadActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -79,6 +85,7 @@ public class StorageDownloadActivity extends AppCompatActivity implements View.O
 
         switch (item.getItemId()) {
             case R.id.item_compartilhar:
+                compartilhar();
                 break;
 
             case R.id.item_criar_pdf:
@@ -183,5 +190,27 @@ public class StorageDownloadActivity extends AppCompatActivity implements View.O
                 }
             }
         });
+    }
+
+
+    private void compartilhar(){
+        if(imageView.getDrawable() != null){
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("imagem/jpeg");
+            BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+
+            Bitmap bitmap = drawable.getBitmap();
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "CursoFirebase", null);
+
+            Uri uri = Uri.parse(path);
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
+            startActivity(Intent.createChooser(intent, "Compartilhar"));
+
+        }else{
+            Toast.makeText(getBaseContext(), "Não possui imagem ainda para compartilhar.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
