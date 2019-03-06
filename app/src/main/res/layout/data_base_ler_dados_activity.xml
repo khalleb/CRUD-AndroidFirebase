@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".database.DataBaseLerDadosActivity">
+
+    <TextView
+        android:id="@+id/textView_dataBase_lerDados_nome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Nome"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.38" />
+
+    <TextView
+        android:id="@+id/textView_dataBase_lerDados_idade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Idade"
+        app:layout_constraintStart_toStartOf="@+id/textView_dataBase_lerDados_nome"
+        app:layout_constraintTop_toBottomOf="@+id/textView_dataBase_lerDados_nome" />
+
+    <TextView
+        android:id="@+id/textView_dataBase_lerDados_fumante"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="fumante"
+        app:layout_constraintStart_toStartOf="@+id/textView_dataBase_lerDados_idade"
+        app:layout_constraintTop_toBottomOf="@+id/textView_dataBase_lerDados_idade" />
+
+    <TextView
+        android:id="@+id/textView_dataBase_lerDados_nome_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:hint="Nome"
+        app:layout_constraintStart_toStartOf="@+id/textView_dataBase_lerDados_fumante"
+        app:layout_constraintTop_toBottomOf="@+id/textView_dataBase_lerDados_fumante" />
+
+    <TextView
+        android:id="@+id/textView_dataBase_lerDados_idade_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Idade"
+        app:layout_constraintStart_toStartOf="@+id/textView_dataBase_lerDados_nome_2"
+        app:layout_constraintTop_toBottomOf="@+id/textView_dataBase_lerDados_nome_2" />
+
+    <TextView
+        android:id="@+id/textView_dataBase_lerDados_fumante_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="fumante"
+        app:layout_constraintStart_toStartOf="@+id/textView_dataBase_lerDados_idade_2"
+        app:layout_constraintTop_toBottomOf="@+id/textView_dataBase_lerDados_idade_2" />
+</android.support.constraint.ConstraintLayout>
