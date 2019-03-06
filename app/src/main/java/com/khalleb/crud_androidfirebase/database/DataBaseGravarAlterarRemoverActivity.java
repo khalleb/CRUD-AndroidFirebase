@@ -13,6 +13,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.khalleb.crud_androidfirebase.R;
+import com.khalleb.crud_androidfirebase.Util.DialogProgress;
+import com.khalleb.crud_androidfirebase.Util.Util;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +29,7 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
 
     private FirebaseDatabase firebaseDatabase;
     private boolean firebaseOffLine = false;
+    private DialogProgress progress;
 
 
     @Override
@@ -69,18 +72,30 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_dataBase_gravar_alterar_remover_salvar:
-                salvarDados();
+                buttonSalvar();
+
                 break;
             case R.id.button_dataBase_gravar_alterar_remover_alterar:
-                alterarDados();
+                buttonAlterar();
                 break;
             case R.id.button_dataBase_gravar_alterar_remover_remover:
-                removerDados();
+                buttonRemover();
                 break;
         }
     }
 
-    private void salvarDados() {
+    private void buttonSalvar() {
+        String nome = this.nome.getText().toString();
+        String idadeString = this.idade.getText().toString();
+        if (Util.verificarCampos(getBaseContext(), nome, idadeString)) {
+            int idade = Integer.parseInt(idadeString);
+            salvarDados(nome, idade);
+        }
+    }
+
+    private void salvarDados(String nome, int idade) {
+        this.progress = new DialogProgress();
+        this.progress.show(getSupportFragmentManager(), "1");
         /*DatabaseReference reference = this.firebaseDatabase.getReference().child("BD").child("Gerentes");
         Map<String,Object> valor = new HashMap<>();
         valor.put("nome", "Maria");
@@ -123,9 +138,9 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
             }
         });*/
 
-        String nome = this.nome.getText().toString();
-        String idadeString = this.idade.getText().toString();
-        int idade = Integer.parseInt(idadeString);
+        // String nome = this.nome.getText().toString();
+        //String idadeString = this.idade.getText().toString();
+        //int idade = Integer.parseInt(idadeString);
 
         DatabaseReference reference = this.firebaseDatabase.getReference().child("BD").child("Gerentes");
         Gerente gerente = new Gerente(nome, idade, false);
@@ -134,49 +149,80 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(getBaseContext(), "Sucesso ao salvar!", Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
                 } else {
                     Toast.makeText(getBaseContext(), "Problema ao salvar!", Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
                 }
             }
         });
     }
 
-    private void alterarDados() {
-
-        String nomePasta = this.nomePasta.getText().toString();
+    private void buttonAlterar() {
         String nome = this.nome.getText().toString();
         String idadeString = this.idade.getText().toString();
-        int idade = Integer.parseInt(idadeString);
-
-        DatabaseReference reference = this.firebaseDatabase.getReference().child("BD").child("Gerentes");
-        Gerente gerente = new Gerente(nome, idade, true);
-
-        Map<String, Object> atualizacao = new HashMap<>();
-        atualizacao.put(nomePasta, gerente);
-        reference.updateChildren(atualizacao).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getBaseContext(), "Sucesso ao alterar!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getBaseContext(), "Problema ao alterar!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        if (Util.verificarCampos(getBaseContext(), nome, idadeString)) {
+            int idade = Integer.parseInt(idadeString);
+            alterarDados(nome, idade);
+        }
     }
 
-    private void removerDados() {
+    private void alterarDados(String nome, int idade) {
+        this.progress = new DialogProgress();
+        this.progress.show(getSupportFragmentManager(), "1");
         String nomePasta = this.nomePasta.getText().toString();
+        // String nome = this.nome.getText().toString();
+        //String idadeString = this.idade.getText().toString();
+        //int idade = Integer.parseInt(idadeString);
+        if (!nomePasta.isEmpty()) {
+            DatabaseReference reference = this.firebaseDatabase.getReference().child("BD").child("Gerentes");
+            Gerente gerente = new Gerente(nome, idade, true);
+
+            Map<String, Object> atualizacao = new HashMap<>();
+            atualizacao.put(nomePasta, gerente);
+            reference.updateChildren(atualizacao).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getBaseContext(), "Sucesso ao alterar!", Toast.LENGTH_SHORT).show();
+                        progress.dismiss();
+                    } else {
+                        Toast.makeText(getBaseContext(), "Problema ao alterar!", Toast.LENGTH_SHORT).show();
+                        progress.dismiss();
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(getBaseContext(), "Preencha o nome da pasta que você qer alterar", Toast.LENGTH_SHORT).show();
+            progress.dismiss();
+        }
+    }
+
+    private void buttonRemover() {
+        String nomePasta = this.nomePasta.getText().toString();
+        if (!nomePasta.isEmpty()) {
+            removerDados(nomePasta);
+        } else {
+            Toast.makeText(getBaseContext(), "Preencha o nome da pasta que você qer remover", Toast.LENGTH_SHORT).show();
+        }
 
 
+    }
+
+    private void removerDados(String nomePasta) {
+        this.progress = new DialogProgress();
+        this.progress.show(getSupportFragmentManager(), "1");
+        //String nomePasta = this.nomePasta.getText().toString();
         DatabaseReference reference = this.firebaseDatabase.getReference().child("BD").child("Gerentes");
         reference.child(nomePasta).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(getBaseContext(), "Sucesso ao remover!", Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
                 } else {
                     Toast.makeText(getBaseContext(), "Problema ao remover!", Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
                 }
             }
         });
