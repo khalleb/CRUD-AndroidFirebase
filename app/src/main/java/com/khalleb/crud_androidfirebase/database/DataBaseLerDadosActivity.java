@@ -1,10 +1,13 @@
 package com.khalleb.crud_androidfirebase.database;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +30,8 @@ public class DataBaseLerDadosActivity extends AppCompatActivity {
 
     private FirebaseDatabase database;
     private ValueEventListener valueEventListener;
+    private DatabaseReference referenceDatabase;
+    private ChildEventListener childEventListener;
 
 
     @Override
@@ -42,8 +47,6 @@ public class DataBaseLerDadosActivity extends AppCompatActivity {
         this.tvFumante2 = (TextView) findViewById(R.id.textView_dataBase_lerDados_fumante_2);
 
         database = FirebaseDatabase.getInstance();
-
-        ouvinte1();
     }
 
 
@@ -86,7 +89,6 @@ public class DataBaseLerDadosActivity extends AppCompatActivity {
                 tvIdade2.setText(idades.get(1) + "");
                 tvFumante2.setText(fumantes.get(1) + "");
 */
-
             }
 
             @Override
@@ -94,5 +96,103 @@ public class DataBaseLerDadosActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void ouvinte2() {
+        this.referenceDatabase = database.getReference().child("BD").child("Gerentes");
+        valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Gerente> gerentes = new ArrayList<Gerente>();
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    Gerente gerente = data.getValue(Gerente.class);
+                    gerentes.add(gerente);
+                }
+
+                tvNome.setText(gerentes.get(0).getNome());
+                tvIdade.setText(gerentes.get(0).getIdade() + "");
+                tvFumante.setText(gerentes.get(0).isFumante() + "");
+
+                tvNome2.setText(gerentes.get(1).getNome());
+                tvIdade2.setText(gerentes.get(1).getIdade() + "");
+                tvFumante2.setText(gerentes.get(1).isFumante() + "");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        this.referenceDatabase.addValueEventListener(this.valueEventListener);
+    }
+
+    private void ouvinte3() {
+        this.referenceDatabase = database.getReference().child("BD").child("Gerentes");
+
+        this.childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Gerente gerente = dataSnapshot.getValue(Gerente.class);
+                Log.i("Ouviente3", gerente.getNome() + " " + dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Log.i("Ouviente3", dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                Log.i("Ouviente3", dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        this.referenceDatabase.addChildEventListener(this.childEventListener);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //ouvinte2();
+        ouvinte3();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        //Ouviente2
+        /*if (this.valueEventListener != null) {
+            this.referenceDatabase.removeEventListener(this.valueEventListener);
+        }*/
+
+        //Ouviente3
+        if (this.childEventListener != null) {
+            this.referenceDatabase.removeEventListener(this.childEventListener);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //Ouviente2
+        /*if (this.valueEventListener != null) {
+            this.referenceDatabase.removeEventListener(this.valueEventListener);
+        }*/
+
+        //Ouviente3
+        if (this.childEventListener != null) {
+            this.referenceDatabase.removeEventListener(this.childEventListener);
+        }
     }
 }
