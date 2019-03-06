@@ -57,6 +57,7 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
                 alterarDados();
                 break;
             case R.id.button_dataBase_gravar_alterar_remover_remover:
+                removerDados();
                 break;
         }
     }
@@ -143,6 +144,23 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
                     Toast.makeText(getBaseContext(), "Sucesso ao alterar!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getBaseContext(), "Problema ao alterar!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void removerDados(){
+        String nomePasta = this.nomePasta.getText().toString();
+
+
+        DatabaseReference reference = this.firebaseDatabase.getReference().child("BD").child("Gerentes");
+        reference.child(nomePasta).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getBaseContext(), "Sucesso ao remover!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Problema ao remover!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
