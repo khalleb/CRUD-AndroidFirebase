@@ -54,6 +54,7 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
                 salvarDados();
                 break;
             case R.id.button_dataBase_gravar_alterar_remover_alterar:
+                alterarDados();
                 break;
             case R.id.button_dataBase_gravar_alterar_remover_remover:
                 break;
@@ -112,14 +113,38 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
         reference.push().setValue(gerente).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Toast.makeText(getBaseContext(), "Sucesso ao salvar!", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getBaseContext(), "Poblema ao salvar!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Problema ao salvar!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
 
+    }
+
+    private void alterarDados() {
+
+        String nomePasta = this.nomePasta.getText().toString();
+        String nome = this.nome.getText().toString();
+        String idadeString = this.idade.getText().toString();
+        int idade = Integer.parseInt(idadeString);
+
+        DatabaseReference reference = this.firebaseDatabase.getReference().child("BD").child("Gerentes");
+        Gerente gerente = new Gerente(nome, idade, true);
+
+        Map<String, Object> atualizacao = new HashMap<>();
+        atualizacao.put(nomePasta, gerente);
+        reference.updateChildren(atualizacao).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getBaseContext(), "Sucesso ao alterar!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Problema ao alterar!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
