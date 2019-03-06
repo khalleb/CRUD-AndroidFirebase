@@ -13,6 +13,12 @@ public class Gerente {
 
     }
 
+    public Gerente(String nome, int idade, boolean fumante) {
+        this.nome = nome;
+        this.idade = idade;
+        this.fumante = fumante;
+    }
+
     public String getNome() {
         return nome;
     }

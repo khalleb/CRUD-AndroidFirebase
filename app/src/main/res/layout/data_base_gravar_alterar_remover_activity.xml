@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".database.DataBaseGravarAlterarRemoverActivity">
+
+
+    <EditText
+        android:id="@+id/editText_dataBase_gravar_alterar_remover_nome_pasta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Nome pasta"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_dataBase_gravar_alterar_remover_nome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Nome"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/editText_dataBase_gravar_alterar_remover_nome_pasta"
+        app:layout_constraintTop_toBottomOf="@+id/editText_dataBase_gravar_alterar_remover_nome_pasta" />
+
+    <EditText
+        android:id="@+id/editText_dataBase_gravar_alterar_remover_idade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Idade"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/editText_dataBase_gravar_alterar_remover_nome"
+        app:layout_constraintTop_toBottomOf="@+id/editText_dataBase_gravar_alterar_remover_nome" />
+
+    <Button
+        android:id="@+id/button_dataBase_gravar_alterar_remover_salvar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Salvar"
+        app:layout_constraintHorizontal_weight="1"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="@+id/editText_dataBase_gravar_alterar_remover_idade"
+        app:layout_constraintTop_toBottomOf="@+id/editText_dataBase_gravar_alterar_remover_idade" />
+
+    <Button
+        android:id="@+id/button_dataBase_gravar_alterar_remover_alterar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_marginLeft="8dp"
+        android:text="Alterar"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toEndOf="@+id/button_dataBase_gravar_alterar_remover_salvar"
+        app:layout_constraintTop_toTopOf="@+id/button_dataBase_gravar_alterar_remover_salvar" />
+
+    <Button
+        android:id="@+id/button_dataBase_gravar_alterar_remover_remover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="Remover"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toEndOf="@+id/button_dataBase_gravar_alterar_remover_alterar"
+        app:layout_constraintTop_toTopOf="@+id/button_dataBase_gravar_alterar_remover_alterar" />
+
+
+</android.support.constraint.ConstraintLayout>

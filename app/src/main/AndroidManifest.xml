@@ -14,7 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".database.DataBaseLerDadosActivity"></activity>
+        <activity
+            android:name=".database.DataBaseGravarAlterarRemoverActivity"
+            android:label="@string/title_activity_data_base_gravar_alterar_remover"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".database.DataBaseLerDadosActivity" />
         <activity android:name=".storage.StorageUploadActivity" />
         <activity android:name=".storage.StorageDownloadActivity" />
         <activity android:name=".MainActivity">

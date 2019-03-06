@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.khalleb.crud_androidfirebase.Util.Permissao;
+import com.khalleb.crud_androidfirebase.database.DataBaseGravarAlterarRemoverActivity;
 import com.khalleb.crud_androidfirebase.database.DataBaseLerDadosActivity;
 import com.khalleb.crud_androidfirebase.storage.StorageDownloadActivity;
 import com.khalleb.crud_androidfirebase.storage.StorageUploadActivity;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             case R.id.cardView_dataBase_ler_gravarAlterarExcluir:
+                startActivity(new Intent(getBaseContext(), DataBaseGravarAlterarRemoverActivity.class));
                 break;
 
 
