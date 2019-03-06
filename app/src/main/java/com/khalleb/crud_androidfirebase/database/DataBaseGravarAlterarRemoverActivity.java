@@ -26,6 +26,7 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
     private Button remover;
 
     private FirebaseDatabase firebaseDatabase;
+    private boolean firebaseOffLine = false;
 
 
     @Override
@@ -45,6 +46,23 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
         this.remover.setOnClickListener(this);
 
         this.firebaseDatabase = FirebaseDatabase.getInstance();
+        ativarFirebaseOffLine();
+    }
+
+    private void ativarFirebaseOffLine() {
+        try {
+            if (!this.firebaseOffLine) {
+                //Rodando OffLine
+                FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+                this.firebaseOffLine = true;
+            } else {
+                //Firebase já estiver funcionando OffLine
+            }
+        } catch (Exception erro) {
+            Toast.makeText(getBaseContext(), erro.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     @Override
@@ -121,8 +139,6 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
                 }
             }
         });
-
-
     }
 
     private void alterarDados() {
@@ -149,7 +165,7 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
         });
     }
 
-    private void removerDados(){
+    private void removerDados() {
         String nomePasta = this.nomePasta.getText().toString();
 
 
