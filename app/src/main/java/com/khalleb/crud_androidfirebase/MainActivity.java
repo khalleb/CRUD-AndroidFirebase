@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.khalleb.crud_androidfirebase.Util.Permissao;
 import com.khalleb.crud_androidfirebase.storage.StorageDownloadActivity;
+import com.khalleb.crud_androidfirebase.storage.StorageUploadActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.cardView_dataBase_upload:
+                startActivity(new Intent(getBaseContext(), StorageUploadActivity.class));
+
                 break;
 
             case R.id.cardView_dataBase_ler_dados:
@@ -71,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String permissoes [] = new String[]{
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA,
+
         };
 
         Permissao.permissao(this, 0, permissoes);
