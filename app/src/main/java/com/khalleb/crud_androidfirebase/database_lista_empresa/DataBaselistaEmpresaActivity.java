@@ -28,6 +28,7 @@ public class DataBaselistaEmpresaActivity extends AppCompatActivity implements R
 
     private ChildEventListener childEventListener;
     private DatabaseReference reference;
+    private List<String> keys = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class DataBaselistaEmpresaActivity extends AppCompatActivity implements R
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 String key = dataSnapshot.getKey();
+                keys.add(key);
                 Empresa empresa = dataSnapshot.getValue(Empresa.class);
                 empresa.setId(key);
                 empresas.add(empresa);
@@ -74,12 +76,26 @@ public class DataBaselistaEmpresaActivity extends AppCompatActivity implements R
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.i("Ouviente", dataSnapshot.getKey());
+                String key = dataSnapshot.getKey();
+                int index = keys.indexOf(key);
+                Empresa empresa = dataSnapshot.getValue(Empresa.class);
+                empresa.setId(key);
+
+                empresas.set(index, empresa);
+                recyclerView_listaEmpresa.notifyDataSetChanged();
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                Log.i("Ouviente", dataSnapshot.getKey());
+                String key = dataSnapshot.getKey();
+                int index = keys.indexOf(key);
+                empresas.remove(index);
+                keys.remove(index);
+
+
+                recyclerView_listaEmpresa.notifyItemChanged(index);
+
+                recyclerView_listaEmpresa.notifyItemChanged(index, empresas.size());
             }
 
             @Override
