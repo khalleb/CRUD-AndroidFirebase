@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".database_lista_empresa.DataBaselistaEmpresaActivity"></activity>
+        <activity android:name=".database_lista_funcionario.DatabaseListaFuncionarioDadosActivity"></activity>
+        <activity android:name=".database_lista_funcionario.DataBaseListaFuncionarioActivity" />
+        <activity android:name=".database_lista_empresa.DataBaselistaEmpresaActivity" />
         <activity
             android:name=".database.DataBaseGravarAlterarRemoverActivity"
             android:label="@string/title_activity_data_base_gravar_alterar_remover"

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.khalleb.crud_androidfirebase.R;
@@ -30,6 +31,7 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
     private FirebaseDatabase firebaseDatabase;
     private boolean firebaseOffLine = false;
     private DialogProgress progress;
+    private ChildEventListener childEventListener;
 
 
     @Override
@@ -96,6 +98,7 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
     private void salvarDados(String nome, int idade) {
         this.progress = new DialogProgress();
         this.progress.show(getSupportFragmentManager(), "1");
+
         /*DatabaseReference reference = this.firebaseDatabase.getReference().child("BD").child("Gerentes");
         Map<String,Object> valor = new HashMap<>();
         valor.put("nome", "Maria");
@@ -148,7 +151,9 @@ public class DataBaseGravarAlterarRemoverActivity extends AppCompatActivity impl
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
+
                     Toast.makeText(getBaseContext(), "Sucesso ao salvar!", Toast.LENGTH_SHORT).show();
+
                     progress.dismiss();
                 } else {
                     Toast.makeText(getBaseContext(), "Problema ao salvar!", Toast.LENGTH_SHORT).show();

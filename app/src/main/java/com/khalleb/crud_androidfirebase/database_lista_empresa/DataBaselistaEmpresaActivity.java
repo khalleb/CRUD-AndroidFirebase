@@ -1,5 +1,6 @@
 package com.khalleb.crud_androidfirebase.database_lista_empresa;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.khalleb.crud_androidfirebase.R;
 import com.khalleb.crud_androidfirebase.database.Gerente;
+import com.khalleb.crud_androidfirebase.database_lista_funcionario.DataBaseListaFuncionarioActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +58,9 @@ public class DataBaselistaEmpresaActivity extends AppCompatActivity implements R
 
     @Override
     public void clickEmpresa(Empresa empresa) {
-
+        Intent intent = new Intent(getBaseContext(), DataBaseListaFuncionarioActivity.class);
+        intent.putExtra("empresa", empresa);
+        startActivity(intent);
     }
 
 
